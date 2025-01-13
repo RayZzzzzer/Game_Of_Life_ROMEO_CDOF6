@@ -67,7 +67,7 @@ function nextGeneration(grid) {
     })
   );
 }
-
+//Improving the code right here
 // Boucle principale
 function gameOfLife(rows, cols, generations, interval = 500, pattern = 'random') {
   let grid = createGrid(rows, cols, pattern);
