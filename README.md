@@ -1,5 +1,6 @@
 Game of Life 
 
+Zap Zap 
 The Game of Life, created by John Conway in 1970, is a cellular automaton that simulates the evolution of cells on a grid. Each cell can be in one of two states: alive or dead. The game evolves in discrete time steps, with each cell's fate determined by its neighbors.
 
 The rules are simple:
