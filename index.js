@@ -3,11 +3,25 @@ import chalk from 'chalk';
 const ALIVE = "O"; // Cellule vivante
 const DEAD = ".";  // Cellule morte
 
-// Génère une grille initiale aléatoire
-function createGrid(rows, cols) {
-  const grid = [];
-  for (let i = 0; i < rows; i++) {
-    grid.push(Array.from({ length: cols }, () => (Math.random() > 0.5 ? ALIVE : DEAD)));
+// Génère une grille initiale avec une configuration par défaut (Glider)
+function createGrid(rows, cols, pattern = 'random') {
+  const grid = Array.from({ length: rows }, () => Array(cols).fill(DEAD));
+
+  if (pattern === 'glider') {
+    // Placer un Glider à une position par défaut (coordonnées 1,1)
+    const gliderPattern = [
+      [0, 1], [1, 2], [2, 0], [2, 1], [2, 2]
+    ];
+    gliderPattern.forEach(([x, y]) => {
+      grid[x + 1][y + 1] = ALIVE; // Décalage pour centrer le Glider
+    });
+  } else if (pattern === 'random') {
+    // Génère une grille aléatoire
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        grid[i][j] = Math.random() > 0.5 ? ALIVE : DEAD;
+      }
+    }
   }
   return grid;
 }
@@ -55,8 +69,8 @@ function nextGeneration(grid) {
 }
 
 // Boucle principale
-function gameOfLife(rows, cols, generations, interval = 500) {
-  let grid = createGrid(rows, cols);
+function gameOfLife(rows, cols, generations, interval = 500, pattern = 'random') {
+  let grid = createGrid(rows, cols, pattern);
 
   let generation = 0;
   const intervalId = setInterval(() => {
@@ -72,4 +86,6 @@ function gameOfLife(rows, cols, generations, interval = 500) {
 const rows = 20; // Nombre de lignes
 const cols = 40; // Nombre de colonnes
 const generations = 100; // Nombre de générations
-gameOfLife(rows, cols, generations);
+const pattern = 'glider'; // Utilise le Glider comme configuration par défaut
+
+gameOfLife(rows, cols, generations, 500, pattern);
